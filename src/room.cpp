@@ -14,8 +14,11 @@ vector<Room> readRoomsFromFile(const string &filename)
         stringstream ss(line);
         Room room;
 
-        ss >> room.roomNumber >> room.seating >> room.roomType >> ws;
-        getline(ss, room.remarks);
+        getline(ss, room.roomNumber, ',');
+        ss >> room.seating;
+        ss.ignore(); // Ignore the comma
+        getline(ss, room.roomType, ',');
+        getline(ss, room.remarks); // Read the entire line as remarks
 
         rooms.push_back(room);
     }

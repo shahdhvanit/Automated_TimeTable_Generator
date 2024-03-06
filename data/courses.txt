@@ -1,1 +1,7 @@
-PC110 LnL 3-0-0-3 core Amishal Modi BTech Sem-1 ICT CS MnC EVD
+PC110, LnL, 3-0-0-3, core, Amishal Modi, BTech Sem-1, ICT, CS, MnC, EVD
+IC101, ICT, 1-0-2-2, core, Anil Roy, BTech Sem-1, ICT, CS, EVD
+EL111, Basic Electronic Circuits, 3-0-2-4, Core, SM, BTech Sem-1, ICT, CS, EVD
+IT112, Introduction to Programming, 3-0-0-3, Core, BG, BTech Sem-1, ICT, CS, EVD 
+IT113, Introduction to Programming, 0-0-2-1, Core, PhD student, BTech Sem-1, ICT, CS, EVD
+SC107, Calculus, 3-1-0-4, Core, MKG, BTech Sem-1, ICT, CS
+CO111, CoCurricular, 0-0-2-1, Core, SBG/Music/Sports, BTech Sem-1, ICT, CS, EVD
