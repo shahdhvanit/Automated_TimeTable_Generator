@@ -7,12 +7,12 @@ using namespace std;
 
 struct Room
 {
-    int roomNumber;
+    string roomNumber;
     int seating;
     string roomType;
     string remarks;
 };
 
-vector<Room> readRoomsFromFile(const string& filename);
+vector<Room> readRoomsFromFile(const string &filename);
 
 #endif

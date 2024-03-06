@@ -1,4 +1,4 @@
-#include "room.h"
+#include "../include/room.h"
 #include <fstream>
 #include <sstream>
 
@@ -13,9 +13,8 @@ vector<Room> readRoomsFromFile(const string &filename)
     {
         stringstream ss(line);
         Room room;
-        char comma;
 
-        ss >> room.roomNumber >> comma >> room.seating >> comma >> room.roomType >> ws;
+        ss >> room.roomNumber >> room.seating >> room.roomType >> ws;
         getline(ss, room.remarks);
 
         rooms.push_back(room);
