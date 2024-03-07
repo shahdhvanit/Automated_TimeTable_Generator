@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 #include <map>
 #include <set>
 #include <ctime>
@@ -42,13 +43,34 @@ bool isOverlap(const Timeslot &t1, const Timeslot &t2)
 
 bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy)
 {
+    auto splitBranches = [](const string &branches)
+    {
+        set<string> result;
+        stringstream ss(branches);
+        string branch;
+        while (getline(ss, branch, ','))
+        {
+            result.insert(branch);
+        }
+        return result;
+    };
+
     for (const auto &existingLecture : timetable)
     {
+        set<string> commonBranches;
+        set<string> lectureBranchSet = splitBranches(lecture.branch);
+        set<string> existingLectureBranchSet = splitBranches(existingLecture.branch);
+
+        set_intersection(
+            lectureBranchSet.begin(), lectureBranchSet.end(),
+            existingLectureBranchSet.begin(), existingLectureBranchSet.end(),
+            inserter(commonBranches, commonBranches.begin()));
+
         if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
             (lecture.roomNumber == existingLecture.roomNumber ||
              lecture.faculty == existingLecture.faculty ||
              lecture.courseCode == existingLecture.courseCode ||
-             (lecture.batch == existingLecture.batch && lecture.branch == existingLecture.branch)))
+             (lecture.batch == existingLecture.batch && !commonBranches.empty())))
         {
             return false;
         }
@@ -61,9 +83,18 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
 
     for (const auto &existingLecture : timetable)
     {
+        set<string> commonBranches;
+        set<string> lectureBranchSet = splitBranches(lecture.branch);
+        set<string> existingLectureBranchSet = splitBranches(existingLecture.branch);
+
+        set_intersection(
+            lectureBranchSet.begin(), lectureBranchSet.end(),
+            existingLectureBranchSet.begin(), existingLectureBranchSet.end(),
+            inserter(commonBranches, commonBranches.begin()));
+
         if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
             lecture.batch == existingLecture.batch &&
-            lecture.branch == existingLecture.branch)
+            !commonBranches.empty())
         {
             return false;
         }
@@ -83,7 +114,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
     vector<Timeslot> allTimeslots;
     for (int day = 1; day <= 5; ++day)
     {
-        for (int slot = 1; slot <= 3; ++slot)
+        for (int slot = 1; slot <= 4; ++slot)
         {
             allTimeslots.push_back({day, slot});
         }
