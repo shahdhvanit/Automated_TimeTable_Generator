@@ -21,11 +21,9 @@ vector<Course> readCoursesFromFile(const string &filename)
         getline(ss, course.faculty, ',');
         getline(ss, course.batch, ',');
 
-        string branch;
-        while (getline(ss, branch, ','))
-        {
-            course.branches.push_back(branch);
-        }
+        string remaining;
+        getline(ss, remaining);
+        course.branches.push_back(remaining);
 
         courses.push_back(course);
     }

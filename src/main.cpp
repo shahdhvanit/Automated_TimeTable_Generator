@@ -81,7 +81,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
     random_shuffle(shuffledCourses.begin(), shuffledCourses.end());
 
     vector<Timeslot> allTimeslots;
-    for (int day = 1; day <= 2; ++day)
+    for (int day = 1; day <= 5; ++day)
     {
         for (int slot = 1; slot <= 3; ++slot)
         {
@@ -97,30 +97,47 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
         for (const auto &branch : course.branches)
         {
             int assignmentsCount = courseAssignments[course.code + branch];
+            int slotsAssignedInDay = 0;
 
             for (const auto &timeslot : allTimeslots)
             {
-                for (const auto &room : rooms)
+                bool courseAssignedOnDay = false;
+
+                for (const auto &assignedLecture : timetable)
                 {
-                    Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, branch};
-
-                    if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
-                        find(course.branches.begin(), course.branches.end(), branch) != course.branches.end())
+                    if (assignedLecture.timeslot.day == timeslot.day &&
+                        assignedLecture.batch == course.batch &&
+                        assignedLecture.branch == branch &&
+                        assignedLecture.courseCode == course.code)
                     {
-                        timetable.push_back(lecture);
-                        timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
-
-                        ++courseAssignments[course.code + branch];
-
-                        if (courseAssignments[course.code + branch] >= 1)
-                            break;
-
+                        courseAssignedOnDay = true;
                         break;
                     }
                 }
 
-                if (courseAssignments[course.code + branch] >= 1)
-                    break;
+                if (!courseAssignedOnDay)
+                {
+                    for (const auto &room : rooms)
+                    {
+                        Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, branch};
+
+                        if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
+                            find(course.branches.begin(), course.branches.end(), branch) != course.branches.end())
+                        {
+                            timetable.push_back(lecture);
+                            timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
+
+                            ++courseAssignments[course.code + branch];
+                            ++slotsAssignedInDay;
+
+                            if (slotsAssignedInDay >= 3)
+                                break;
+                        }
+                    }
+
+                    if (slotsAssignedInDay >= 3)
+                        break;
+                }
             }
         }
     }
