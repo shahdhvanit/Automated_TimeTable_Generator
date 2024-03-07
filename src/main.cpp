@@ -4,6 +4,7 @@
 #include <map>
 #include <set>
 #include <ctime>
+#include <iomanip>
 #include "../include/course.h"
 #include "../include/room.h"
 
@@ -30,6 +31,8 @@ struct Lecture
     string faculty;
     string roomNumber;
     Timeslot timeslot;
+    string batch;
+    string branch;
 };
 
 bool isOverlap(const Timeslot &t1, const Timeslot &t2)
@@ -37,24 +40,42 @@ bool isOverlap(const Timeslot &t1, const Timeslot &t2)
     return (t1.day == t2.day && t1.slot == t2.slot);
 }
 
-bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable)
+bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy)
 {
     for (const auto &existingLecture : timetable)
     {
         if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
             (lecture.roomNumber == existingLecture.roomNumber ||
              lecture.faculty == existingLecture.faculty ||
-             lecture.courseCode == existingLecture.courseCode))
+             lecture.courseCode == existingLecture.courseCode ||
+             (lecture.batch == existingLecture.batch && lecture.branch == existingLecture.branch)))
         {
             return false;
         }
     }
+
+    if (timeslotOccupancy[lecture.timeslot].find(lecture.branch) != timeslotOccupancy[lecture.timeslot].end())
+    {
+        return false;
+    }
+
+    for (const auto &existingLecture : timetable)
+    {
+        if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
+            lecture.batch == existingLecture.batch &&
+            lecture.branch == existingLecture.branch)
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 
 vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Room> &rooms)
 {
     vector<Lecture> timetable;
+    map<Timeslot, set<string>> timeslotOccupancy;
 
     vector<Course> shuffledCourses = courses;
     random_shuffle(shuffledCourses.begin(), shuffledCourses.end());
@@ -71,39 +92,65 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
     map<string, int> courseAssignments;
 
-    map<Timeslot, set<string>> roomAvailability;
-
     for (const auto &course : shuffledCourses)
     {
-        int assignmentsCount = courseAssignments[course.code];
-
-        for (const auto &timeslot : allTimeslots)
+        for (const auto &branch : course.branches)
         {
-            for (const auto &room : rooms)
+            int assignmentsCount = courseAssignments[course.code + branch];
+
+            for (const auto &timeslot : allTimeslots)
             {
-                Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot};
-
-                if (isValidAssignment(lecture, timetable) &&
-                    roomAvailability[timeslot].find(room.roomNumber) == roomAvailability[timeslot].end())
+                for (const auto &room : rooms)
                 {
-                    timetable.push_back(lecture);
-                    roomAvailability[timeslot].insert(room.roomNumber);
+                    Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, branch};
 
-                    ++courseAssignments[course.code];
+                    if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
+                        find(course.branches.begin(), course.branches.end(), branch) != course.branches.end())
+                    {
+                        timetable.push_back(lecture);
+                        timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
 
-                    if (courseAssignments[course.code] >= 1)
+                        ++courseAssignments[course.code + branch];
+
+                        if (courseAssignments[course.code + branch] >= 1)
+                            break;
+
                         break;
-
-                    break;
+                    }
                 }
-            }
 
-            if (courseAssignments[course.code] >= 1)
-                break;
+                if (courseAssignments[course.code + branch] >= 1)
+                    break;
+            }
         }
     }
 
     return timetable;
+}
+
+void printTimetable(const vector<Lecture> &timetable)
+{
+    cout << setw(15) << "Course" << setw(20) << "Faculty" << setw(15) << "Room"
+         << setw(10) << "Day" << setw(10) << "Slot" << setw(15) << "Batch" << setw(15) << "Branch" << endl;
+
+    map<pair<string, string>, vector<Lecture>> groupedLectures;
+    for (const auto &lecture : timetable)
+    {
+        groupedLectures[{lecture.batch, lecture.branch}].push_back(lecture);
+    }
+
+    for (const auto &entry : groupedLectures)
+    {
+        const auto &lectures = entry.second;
+        for (const auto &lecture : lectures)
+        {
+            cout << setw(15) << lecture.courseCode << setw(20) << lecture.faculty
+                 << setw(15) << lecture.roomNumber << setw(10) << lecture.timeslot.day
+                 << setw(10) << lecture.timeslot.slot << setw(15) << lecture.batch
+                 << setw(15) << lecture.branch << endl;
+        }
+        cout << string(100, '-') << endl;
+    }
 }
 
 int main()
@@ -115,16 +162,15 @@ int main()
 
     vector<Lecture> timetable = generateTimetable(courses, rooms);
 
-    sort(timetable.begin(), timetable.end(), [](const Lecture &lhs, const Lecture &rhs) {
-        return lhs.roomNumber < rhs.roomNumber;
-    });
+    sort(timetable.begin(), timetable.end(), [](const Lecture &lhs, const Lecture &rhs)
+         {
+             if (lhs.timeslot.day == rhs.timeslot.day)
+             {
+                 return lhs.timeslot.slot < rhs.timeslot.slot;
+             }
+             return lhs.timeslot.day < rhs.timeslot.day; });
 
-    for (const auto &lecture : timetable)
-    {
-        cout << "Course: " << lecture.courseCode << ", Faculty: " << lecture.faculty
-             << ", Room: " << lecture.roomNumber << ", Day: " << lecture.timeslot.day
-             << ", Slot: " << lecture.timeslot.slot << endl;
-    }
+    printTimetable(timetable);
 
     return 0;
 }
