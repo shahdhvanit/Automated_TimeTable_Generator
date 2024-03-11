@@ -1,0 +1,33 @@
+name: Build and Run
+
+on:
+  push:
+    branches:
+      - main
+      - pranshu
+      - khush
+      - namrak
+      - namras
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build and Run
+      run: |
+        g++ src/main.cpp src/room.cpp src/course.cpp -o timetable
+        OUTPUT_FILE="output${{ github.run_number }}.txt"
+        ./timetable > "$OUTPUT_FILE"
+        mkdir artifacts
+        mv "$OUTPUT_FILE" artifacts/
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts
+        path: artifacts
+        
