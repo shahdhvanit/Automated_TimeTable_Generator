@@ -116,7 +116,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
     for (int day = 1; day <= 5; ++day)
     {
-        for (int slot = 1; slot <= 4; ++slot)
+        for (int slot = 1; slot <= 5; ++slot)
         {
             for (const auto &room : rooms)
             {

@@ -1,0 +1,120 @@
+         Course             Faculty           Room       Day      Slot          Batch         Branch
+          EL111                 RLD            106         1         5    BTech Sem-1             CS
+          EL111                 RLD          LT-01         2         2    BTech Sem-1             CS
+          EL111                 RLD            205         3         3    BTech Sem-1             CS
+          EL111                 RLD            106         4         1    BTech Sem-1             CS
+          EL111                 RLD          LT-02         5         4    BTech Sem-1             CS
+          IT112                  MK            205         3         1    BTech Sem-1        CS, EVD
+          IT112                  MK            205         4         4    BTech Sem-1        CS, EVD
+          PC110                  AM            108         1         2    BTech Sem-1   CS, MnC, EVD
+          PC110                  AM            206         3         5    BTech Sem-1   CS, MnC, EVD
+          PC110                  AM            104         4         2    BTech Sem-1   CS, MnC, EVD
+          EL111                  BM            103         1         3    BTech Sem-1            EVD
+          ED111                 PK2            107         1         4    BTech Sem-1            EVD
+          ED112                  AG          LT-02         1         5    BTech Sem-1            EVD
+          ED111                 PK2            205         2         3    BTech Sem-1            EVD
+          EL111                  BM            204         2         4    BTech Sem-1            EVD
+          ED112                  AG            206         2         5    BTech Sem-1            EVD
+          EL111                  BM            106         3         2    BTech Sem-1            EVD
+          ED111                 PK2            109         3         3    BTech Sem-1            EVD
+          ED112                  AG            204         3         4    BTech Sem-1            EVD
+          ED112                  AG            104         4         1    BTech Sem-1            EVD
+          EL111                  BM            106         4         3    BTech Sem-1            EVD
+          ED111                 PK2            104         4         5    BTech Sem-1            EVD
+          ED111                 PK2            206         5         2    BTech Sem-1            EVD
+          ED112                  AG          LT-01         5         4    BTech Sem-1            EVD
+          EL111                  BM          LT-01         5         5    BTech Sem-1            EVD
+          EL111                  SM            105         1         2    BTech Sem-1            ICT
+          PC110                  AM            104         1         4    BTech Sem-1            ICT
+          SC107                 MKG            107         2         2    BTech Sem-1            ICT
+          PC110                  AM          LT-02         2         3    BTech Sem-1            ICT
+          PC110                  AM            204         3         2    BTech Sem-1            ICT
+          EL111                  SM            103         3         5    BTech Sem-1            ICT
+          PC110                  AM            107         4         1    BTech Sem-1            ICT
+          EL111                  SM            210         4         2    BTech Sem-1            ICT
+          PC110                  AM            207         5         4    BTech Sem-1            ICT
+          IC101                 AKR            202         1         3    BTech Sem-1        ICT, CS
+          IC101                 AKR          LT-02         2         5    BTech Sem-1        ICT, CS
+          IC101                 AKR            202         3         4    BTech Sem-1        ICT, CS
+          IC101                 AKR            212         4         3    BTech Sem-1        ICT, CS
+          IC101                 AKR            108         5         1    BTech Sem-1        ICT, CS
+          IT113         PhD student            102         1         1    BTech Sem-1   ICT, CS, EVD
+          IT113         PhD student            104         2         1    BTech Sem-1   ICT, CS, EVD
+          IT113         PhD student            106         5         3    BTech Sem-1   ICT, CS, EVD
+          MC123                  SP            109         1         1    BTech Sem-1            MnC
+          MC113         PhD student            205         1         3    BTech Sem-1            MnC
+          MC113         PhD student            103         2         2    BTech Sem-1            MnC
+          MC123                  SP            109         2         4    BTech Sem-1            MnC
+          MC113         PhD student            108         3         1    BTech Sem-1            MnC
+          MC123                  SP            204         3         3    BTech Sem-1            MnC
+          MC113         PhD student            105         4         4    BTech Sem-1            MnC
+          MC123                  SP            209         4         5    BTech Sem-1            MnC
+          MC123                  SP            003         5         3    BTech Sem-1            MnC
+          MC113         PhD student            211         5         5    BTech Sem-1            MnC
+          CT204                  PK            207         1         1    BTech Sem-3             CS
+          IT227                  SB            106         1         3    BTech Sem-3             CS
+          SC223                  AT            205         1         4    BTech Sem-3             CS
+          SC223                  AT            211         2         1    BTech Sem-3             CS
+          CT204                  PK            203         2         3    BTech Sem-3             CS
+          IT227                  SB            003         2         4    BTech Sem-3             CS
+          CT204                  PK          LT-02         3         1    BTech Sem-3             CS
+          IT227                  SB            205         3         2    BTech Sem-3             CS
+          SC223                  AT            206         3         4    BTech Sem-3             CS
+          SC223                  AT            105         4         2    BTech Sem-3             CS
+          CT204                  PK          LT-01         4         4    BTech Sem-3             CS
+          IT227                  SB            110         4         5    BTech Sem-3             CS
+          SC223                  AT            202         5         2    BTech Sem-3             CS
+          CT204                  PK            102         5         3    BTech Sem-3             CS
+          IT227                  SB            202         5         5    BTech Sem-3             CS
+          IT216                  PB            209         1         1    BTech Sem-3            ICT
+          IT227                 AKM            109         1         5    BTech Sem-3            ICT
+          IT216                  PB            202         2         4    BTech Sem-3            ICT
+          IT227                 AKM            106         2         5    BTech Sem-3            ICT
+          IT216                  PB            202         3         1    BTech Sem-3            ICT
+          IT227                 AKM            209         3         3    BTech Sem-3            ICT
+          IT227                 AKM            108         4         3    BTech Sem-3            ICT
+          IT216                  PB            107         4         5    BTech Sem-3            ICT
+          IT227                 AKM            209         5         1    BTech Sem-3            ICT
+          IT216                  PB            109         5         3    BTech Sem-3            ICT
+          SC223                  RM            110         5         5    BTech Sem-3            ICT
+          HM216                  SJ            102         2         2    BTech Sem-3   ICT, CS, MnC
+          MC212                  RC            106         1         2    BTech Sem-3            MnC
+          MC216                  SK            109         1         4    BTech Sem-3            MnC
+          MC211                  MS            203         1         5    BTech Sem-3            MnC
+          MC211                  MS            109         2         1    BTech Sem-3            MnC
+          MC212                  RC            104         2         3    BTech Sem-3            MnC
+          MC216                  SK            102         2         5    BTech Sem-3            MnC
+          MC211                  MS            105         3         2    BTech Sem-3            MnC
+          MC212                  RC            205         3         4    BTech Sem-3            MnC
+          MC216                  SK            107         3         5    BTech Sem-3            MnC
+          MC212                  RC            207         4         1    BTech Sem-3            MnC
+          MC216                  SK            212         4         2    BTech Sem-3            MnC
+          MC211                  MS            105         4         3    BTech Sem-3            MnC
+          MC216                  SK            104         5         1    BTech Sem-3            MnC
+          MC212                  RC            207         5         2    BTech Sem-3            MnC
+          MC211                  MS            108         5         4    BTech Sem-3            MnC
+          CT303                 DKG            207         1         2    BTech Sem-5             CS
+          CT303                 DKG            203         2         5    BTech Sem-5             CS
+          CT303                 DKG            211         3         5    BTech Sem-5             CS
+          CT303                 DKG            109         4         3    BTech Sem-5             CS
+          CT303                 DKG          LT-02         5         1    BTech Sem-5             CS
+          CT303                  AJ            104         1         3    BTech Sem-5            ICT
+          CT303                  AJ            102         2         1    BTech Sem-5            ICT
+          CT303                  AJ            107         3         4    BTech Sem-5            ICT
+          CT303                  AJ            209         4         4    BTech Sem-5            ICT
+          CT303                  AJ            110         5         2    BTech Sem-5            ICT
+          IE406                 MVJ            108         1         1    BTech Sem-5        ICT, CS
+          IE408                 RLD            003         1         4    BTech Sem-5        ICT, CS
+          IE407                 VSP            102         1         5    BTech Sem-5        ICT, CS
+          IE407                 VSP            110         2         2    BTech Sem-5        ICT, CS
+          IE408                 RLD            206         2         3    BTech Sem-5        ICT, CS
+          IE406                 MVJ          LT-01         2         4    BTech Sem-5        ICT, CS
+          IE408                 RLD            106         3         1    BTech Sem-5        ICT, CS
+          IE407                 VSP            110         3         2    BTech Sem-5        ICT, CS
+          IE406                 MVJ            108         3         3    BTech Sem-5        ICT, CS
+          IE407                 VSP            204         4         1    BTech Sem-5        ICT, CS
+          IE406                 MVJ            109         4         2    BTech Sem-5        ICT, CS
+          IE408                 RLD            109         4         5    BTech Sem-5        ICT, CS
+          IE408                 RLD          LT-03         5         3    BTech Sem-5        ICT, CS
+          IE406                 MVJ            209         5         4    BTech Sem-5        ICT, CS
+          IE407                 VSP            203         5         5    BTech Sem-5        ICT, CS
