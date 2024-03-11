@@ -2,7 +2,8 @@ PC110, LnL, 3-0-0-3, core, AM, BTech Sem-1, ICT
 PC110, LnL, 3-0-0-3, core, AM, BTech Sem-1, CS, MnC, EVD
 IC101, ICT, 1-0-2-2, core, AKR, BTech Sem-1, ICT, CS
 EL111, Basic Electronic Circuits, 3-0-2-4, Core, SM, BTech Sem-1, ICT
-EL111, Basic Electronic Circuits, 3-0-2-4, Core, RLD, BTech Sem-1, CS, EVD
+EL111, Basic Electronic Circuits, 3-0-2-4, Core, RLD, BTech Sem-1, CS
+EL111, Basic Electronic Circuits, 3-0-2-4, Core, BM, BTech Sem-1, EVD
 IT112, Introduction to Programming, 3-0-0-3, Core, BG, BTech Sem-1, ICT
 IT112, Introduction to Programming, 3-0-0-3, Core, MK, BTech Sem-1, CS, EVD
 IT113, Introduction to Programming, 0-0-2-1, Core, PhD student, BTech Sem-1, ICT, CS, EVD
@@ -29,3 +30,17 @@ MC212, Database Management Systems, 3-0-2-4, Core, RC, BTech Sem-3, MnC
 MC213, Design and Analysis of Algorithms, 3-1-0-4, Core, AT2, BTech Sem-3, MnC
 MC214, Operating Systems (along with IE411), 3-0-2-4, Core, SS, BTech Sem-3, MnC
 MC216, Probability and Random Processes, 3-1-0-4, Core, SK, BTech Sem-3, MnC
+IT314, Software Engineering, 3-0-2-4, Core, ST, BTech Sem-5, ICT, CS
+IT304, Computer Networks, 3-0-2-4, Core, PKS, BTech Sem-5, ICT, CS
+CT303, Digital Communication, 3-0-2-4, Core, AJ, BTech Sem-5, ICT
+CT303, Digital Communication, 3-0-2-4, Core, DKG, BTech Sem-5, CS
+CS374, Computational and Numerical Methods, 3-0-3-4.5, Core, MKR, BTech Sem-5, CS
+MC311, Mathematical Optimization, 3-1-0-4, Core, NKS, BTech Sem-5, MnC
+MC312, Modelling and Simulation, 3-0-2-4, Core, MT, BTech Sem-5, MnC
+MC313, Algebraic Structures, 3-1-0-4, Core, PK3, BTech Sem-5, MnC
+MC314, Principles of Economics, 3-0-0-3, Core, GS, BTech Sem-5, MnC
+IE402, Optimization, 3-0-2-4, ICT & Technical Elective, MK2, BTech Sem-5, ICT, CS
+IE411, Operating Systems, 3-0-2-4, ICT & Technical Elective, SS, BTech Sem-5, ICT, CS
+IE407, Internet of Things, 3-0-2-4, ICT & Technical Elective (RAS minor), VSP, BTech Sem-5, ICT, CS
+IE406, Machine Learning, 3-0-2-4, ICT & Technical Elective (RAS minor), MVJ, BTech Sem-5, ICT, CS
+IE408, Control of Autonomous Systems, 3-0-2-4, ICT & Technical Elective (RAS minor), RLD, BTech Sem-5, ICT, CS
