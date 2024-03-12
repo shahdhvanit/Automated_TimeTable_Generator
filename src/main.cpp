@@ -108,6 +108,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
     vector<Lecture> timetable;
     map<Timeslot, set<string>> timeslotOccupancy;
     map<int, set<string>> lecturesAssignedPerDay;
+    set<string> assignedCourses;
 
     vector<Course> shuffledCourses = courses;
     random_shuffle(shuffledCourses.begin(), shuffledCourses.end());
@@ -131,6 +132,8 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
     for (const auto &course : shuffledCourses)
     {
+        int maxLecturesPerCourse = 3;
+
         for (const auto &branch : course.branches)
         {
             int assignmentsCount = courseAssignments[course.code + branch];
@@ -144,11 +147,14 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
                 if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
                     find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
-                    lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                    lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0 &&
+                    courseAssignments[course.code + branch] < maxLecturesPerCourse)
                 {
                     timetable.push_back(lecture);
                     timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
                     lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+
+                    assignedCourses.insert(course.code);
 
                     ++courseAssignments[course.code + branch];
                 }
@@ -158,6 +164,15 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
         for (int day = 1; day <= 5; ++day)
         {
             lecturesAssignedPerDay[day].clear();
+        }
+    }
+
+    for (const auto &course : courses)
+    {
+        if (assignedCourses.find(course.code) == assignedCourses.end())
+        {
+            Lecture defaultLecture = {course.code, course.faculty, "", {1, 1}, course.batch, ""};
+            timetable.push_back(defaultLecture);
         }
     }
 
