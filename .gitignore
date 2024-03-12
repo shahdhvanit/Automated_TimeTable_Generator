@@ -34,3 +34,6 @@ timetable.exe
 
 #jsons
 *.json
+
+# Debug files
+*.txt

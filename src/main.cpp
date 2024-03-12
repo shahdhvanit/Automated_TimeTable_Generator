@@ -41,7 +41,7 @@ bool isOverlap(const Timeslot &t1, const Timeslot &t2)
     return (t1.day == t2.day && t1.slot == t2.slot);
 }
 
-bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy)
+bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy, int &maxLecturesPerCourseAndBranch)
 {
     auto splitBranches = [](const string &branches)
     {
@@ -81,23 +81,9 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
         return false;
     }
 
-    for (const auto &existingLecture : timetable)
+    if (maxLecturesPerCourseAndBranch <= 0)
     {
-        set<string> commonBranches;
-        set<string> lectureBranchSet = splitBranches(lecture.branch);
-        set<string> existingLectureBranchSet = splitBranches(existingLecture.branch);
-
-        set_intersection(
-            lectureBranchSet.begin(), lectureBranchSet.end(),
-            existingLectureBranchSet.begin(), existingLectureBranchSet.end(),
-            inserter(commonBranches, commonBranches.begin()));
-
-        if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
-            lecture.batch == existingLecture.batch &&
-            !commonBranches.empty())
-        {
-            return false;
-        }
+        return false;
     }
 
     return true;
@@ -107,72 +93,67 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 {
     vector<Lecture> timetable;
     map<Timeslot, set<string>> timeslotOccupancy;
-    map<int, set<string>> lecturesAssignedPerDay;
     set<string> assignedCourses;
 
     vector<Course> shuffledCourses = courses;
     random_shuffle(shuffledCourses.begin(), shuffledCourses.end());
 
-    vector<pair<Timeslot, string>> allSlotsWithRooms;
+    map<string, int> courseAssignments;
+    map<string, int> maxLecturesPerCourse;
 
-    for (int day = 1; day <= 5; ++day)
+    for (const auto &course : courses)
     {
-        for (int slot = 1; slot <= 5; ++slot)
+        for (const auto &branch : course.branches)
         {
-            for (const auto &room : rooms)
-            {
-                allSlotsWithRooms.push_back({{day, slot}, room.roomNumber});
-            }
+            maxLecturesPerCourse[course.code + branch] = 3;
         }
     }
 
-    random_shuffle(allSlotsWithRooms.begin(), allSlotsWithRooms.end());
-
-    map<string, int> courseAssignments;
-
     for (const auto &course : shuffledCourses)
     {
-        int maxLecturesPerCourse = 3;
-
         for (const auto &branch : course.branches)
         {
             int assignmentsCount = courseAssignments[course.code + branch];
+            int maxLecturesPerCourseAndBranch = maxLecturesPerCourse[course.code + branch];
 
-            for (const auto &slotWithRoom : allSlotsWithRooms)
+            for (const auto &room : rooms)
             {
-                const auto &timeslot = slotWithRoom.first;
-                const auto &roomNumber = slotWithRoom.second;
-
-                Lecture lecture = {course.code, course.faculty, roomNumber, timeslot, course.batch, branch};
-
-                if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
-                    find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
-                    lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0 &&
-                    courseAssignments[course.code + branch] < maxLecturesPerCourse)
+                for (int day = 1; day <= 5; ++day)
                 {
-                    timetable.push_back(lecture);
-                    timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
-                    lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+                    for (int slot = 1; slot <= 5; ++slot)
+                    {
+                        const Timeslot timeslot = {day, slot};
+                        const string &roomNumber = room.roomNumber;
 
-                    assignedCourses.insert(course.code);
+                        Lecture lecture = {course.code, course.faculty, roomNumber, timeslot, course.batch, branch};
 
-                    ++courseAssignments[course.code + branch];
+                        if (isValidAssignment(lecture, timetable, timeslotOccupancy, maxLecturesPerCourseAndBranch))
+                        {
+                            timetable.push_back(lecture);
+                            timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
+
+                            assignedCourses.insert(course.code);
+
+                            ++courseAssignments[course.code + branch];
+                            --maxLecturesPerCourseAndBranch;
+
+                            break;
+                        }
+                    }
                 }
             }
-        }
-
-        for (int day = 1; day <= 5; ++day)
-        {
-            lecturesAssignedPerDay[day].clear();
         }
     }
 
     for (const auto &course : courses)
     {
-        if (assignedCourses.find(course.code) == assignedCourses.end())
+        for (const auto &branch : course.branches)
         {
-            Lecture defaultLecture = {course.code, course.faculty, "", {1, 1}, course.batch, ""};
-            timetable.push_back(defaultLecture);
+            if (assignedCourses.find(course.code + branch) == assignedCourses.end())
+            {
+                Lecture defaultLecture = {course.code, course.faculty, "", {1, 1}, course.batch, branch};
+                timetable.push_back(defaultLecture);
+            }
         }
     }
 
@@ -181,7 +162,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
 void printTimetable(const vector<Lecture> &timetable)
 {
-    cout << setw(15) << "Course" << setw(20) << "Faculty" << setw(15) << "Room"
+    cout << setw(10) << "Course" << setw(20) << "Faculty" << setw(15) << "Room"
          << setw(10) << "Day" << setw(10) << "Slot" << setw(15) << "Batch" << setw(15) << "Branch" << endl;
 
     map<pair<string, string>, vector<Lecture>> groupedLectures;
@@ -195,7 +176,7 @@ void printTimetable(const vector<Lecture> &timetable)
         const auto &lectures = entry.second;
         for (const auto &lecture : lectures)
         {
-            cout << setw(15) << lecture.courseCode << setw(20) << lecture.faculty
+            cout << setw(10) << lecture.courseCode << setw(20) << lecture.faculty
                  << setw(15) << lecture.roomNumber << setw(10) << lecture.timeslot.day
                  << setw(10) << lecture.timeslot.slot << setw(15) << lecture.batch
                  << setw(15) << lecture.branch << endl;
