@@ -38,6 +38,7 @@ CS374, Computational and Numerical Methods, 3-0-3-4.5, Core, MKR, BTech Sem-5, C
 MC311, Mathematical Optimization, 3-1-0-4, Core, NKS, BTech Sem-5, MnC
 MC312, Modelling and Simulation, 3-0-2-4, Core, MT, BTech Sem-5, MnC
 MC313, Algebraic Structures, 3-1-0-4, Core, PK3, BTech Sem-5, MnC
+MC314, Principles of Economics, 3-0-0-3, Core, GS, BTech Sem-5, MnC
 IE402, Optimization, 3-0-2-4, ICT & Technical Elective, MK2, BTech Sem-5, ICT, CS
 IE411, Operating Systems, 3-0-2-4, ICT & Technical Elective, SS, BTech Sem-5, ICT, CS
 IE407, Internet of Things, 3-0-2-4, ICT & Technical Elective (RAS minor), VSP, BTech Sem-5, ICT, CS
