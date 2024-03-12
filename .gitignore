@@ -31,3 +31,6 @@
 *.out
 *.app
 timetable.exe
+
+#jsons
+*.json
