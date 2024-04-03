@@ -42,31 +42,38 @@ bool isOverlap(const Timeslot &t1, const Timeslot &t2)
 
 bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy)
 {
+    map<string, int> lectureDaysCount;
+
     for (const auto &existingLecture : timetable)
     {
-        for (const auto &existingBatch : existingLecture.batches)
+        for (const auto &batch : existingLecture.batches)
         {
-            for (const auto &existingBranch : existingLecture.branches)
+            for (const auto &branch : existingLecture.branches)
             {
-                for (const auto &batch : lecture.batches)
+                if (batch == lecture.batches[0] && branch == lecture.branches[0])
                 {
-                    for (const auto &branch : lecture.branches)
-                    {
-                        if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
-                            (lecture.roomNumber == existingLecture.roomNumber ||
-                             lecture.faculty == existingLecture.faculty ||
-                             lecture.courseCode == existingLecture.courseCode ||
-                             (batch == existingBatch && branch == existingBranch && lecture.courseType == "elective")))
-                        {
-                            return false;
-                        }
-                    }
+                    lectureDaysCount[existingLecture.courseCode]++;
+                }
+            }
+        }
+
+        for (const auto &batch : lecture.batches)
+        {
+            for (const auto &branch : lecture.branches)
+            {
+                if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
+                    (lecture.roomNumber == existingLecture.roomNumber ||
+                     lecture.faculty == existingLecture.faculty ||
+                     lecture.courseCode == existingLecture.courseCode ||
+                     (batch == existingLecture.batches[0] && branch == existingLecture.branches[0] && lecture.courseType == "elective")))
+                {
+                    return false;
                 }
             }
         }
     }
 
-    if (timeslotOccupancy[lecture.timeslot].size() >= 3)
+    if (lectureDaysCount.size() >= 5)
     {
         return false;
     }
@@ -124,7 +131,6 @@ void printTimetable(const vector<Lecture> &timetable)
             for (const auto &branch : lecture.branches)
             {
                 string key = batch + "_" + branch;
-
                 lecturesByBatchAndBranch[key][lecture.courseCode].push_back(lecture);
             }
         }
