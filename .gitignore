@@ -32,8 +32,8 @@
 *.app
 timetable.exe
 
-#jsons
+# jsons
 *.json
 
-# Debug files
-*.txt
+# vscode folder
+.vscode

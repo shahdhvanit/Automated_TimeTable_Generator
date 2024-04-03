@@ -1,0 +1,20 @@
+HM106, AIS, PD, LT1, sem-2, ICT
+IC121, DLCO, SR, LT1, sem-2, ICT
+HM106, AIS, RBB, LT2, sem-2, CS;EVD;MnC
+IC121, DLCO, PK, LT1, sem-2, CS;EVD
+MC215, LA, GP2, CEP205, sem-2, MnC
+HM116, PE, CJ, CEP110, sem-4, ICT
+HM116, PE, YV, LT3, sem-4, MnC
+EL203, EHD, BM, LT2, sem-4, ICT
+EL203, EHD, YA, LT3, sem-4, CS
+MC222, RCA, SB2, CEP206, sem-4, MnC
+SC407, ES, YV, LT3, sem-6, ICT;CS
+MC321, ML, PA, CEP104, sem-6, MnC
+HM327, CPI, MM, CEP105, sem-6;sem-8, ICT;CS;MnC, elective
+HM432, OB, NB, CEP103, sem-6;sem-8, ICT;CS;MnC, elective
+HM402, PSA, SJ, CEP106, sem-6;sem-8, ICT;CS;MnC, elective
+HM477, TEN, AM, CEP108, sem-6;sem-8, ICT;CS;MnC, elective
+HM481, RP, BK, CEP102, sem-6;sem-8, ICT;CS;MnC, elective
+HM492, IC, JJ, CEP110, sem-6;sem-8, ICT;CS;MnC, elective
+HM493, TMMI, PD, CEP104, sem-6;sem-8, ICT;CS;MnC, elective
+HM494, IDT, RBB, CEP107, sem-6;sem-8, ICT;CS;MnC, elective
