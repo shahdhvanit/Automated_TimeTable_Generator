@@ -31,9 +31,3 @@
 *.out
 *.app
 timetable.exe
-
-# jsons
-*.json
-
-# vscode folder
-.vscode
