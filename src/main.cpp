@@ -131,28 +131,40 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
     for (const auto &course : shuffledCourses)
     {
+        int lectures = stoi(course.credit.substr(0, course.credit.find("-")));
+        int assignmentsCount = 0; 
+
         for (const auto &branch : course.branches)
         {
-            int assignmentsCount = courseAssignments[course.code + branch];
-
-            for (const auto &slotWithRoom : allSlotsWithRooms)
+            for (int i = 0; i < lectures; ++i)
             {
-                const auto &timeslot = slotWithRoom.first;
-                const auto &roomNumber = slotWithRoom.second;
-
-                Lecture lecture = {course.code, course.faculty, roomNumber, timeslot, course.batch, branch};
-
-                if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
-                    find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
-                    lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                for (const auto &slotWithRoom : allSlotsWithRooms)
                 {
-                    timetable.push_back(lecture);
-                    timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
-                    lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+                    const auto &timeslot = slotWithRoom.first;
+                    const auto &roomNumber = slotWithRoom.second;
 
-                    ++courseAssignments[course.code + branch];
+                    Lecture lecture = {course.code, course.faculty, roomNumber, timeslot, course.batch, branch};
+
+                    if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
+                        find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
+                        lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                    {
+                        timetable.push_back(lecture);
+                        timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
+                        lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+
+                        ++courseAssignments[course.code + branch];
+                        ++assignmentsCount; 
+
+                        break; 
+                    }
                 }
             }
+        }
+
+        if (assignmentsCount < lectures)
+        {
+            cerr << "Warning: Could not assign required number of lectures for course " << course.code << endl;
         }
 
         for (int day = 1; day <= 5; ++day)
@@ -169,21 +181,36 @@ void printTimetable(const vector<Lecture> &timetable)
     cout << setw(15) << "Course" << setw(20) << "Faculty" << setw(15) << "Room"
          << setw(10) << "Day" << setw(10) << "Slot" << setw(15) << "Batch" << setw(15) << "Branch" << endl;
 
-    map<pair<string, string>, vector<Lecture>> groupedLectures;
+    map<pair<string, string>, vector<Lecture>> batchBranchLectures;
     for (const auto &lecture : timetable)
     {
-        groupedLectures[{lecture.batch, lecture.branch}].push_back(lecture);
+        vector<string> branches;
+        stringstream ss(lecture.branch);
+        string branch;
+        while (getline(ss, branch, ','))
+        {
+            branches.push_back(branch);
+        }
+
+        for (const auto &branch : branches)
+        {
+            batchBranchLectures[{lecture.batch, branch}].push_back(lecture);
+        }
     }
 
-    for (const auto &entry : groupedLectures)
+    for (const auto &entry : batchBranchLectures)
     {
+        const auto &batchBranch = entry.first;
         const auto &lectures = entry.second;
+
+        cout << "Batch: " << batchBranch.first << ", Branch: " << batchBranch.second << endl;
+
         for (const auto &lecture : lectures)
         {
             cout << setw(15) << lecture.courseCode << setw(20) << lecture.faculty
                  << setw(15) << lecture.roomNumber << setw(10) << lecture.timeslot.day
-                 << setw(10) << lecture.timeslot.slot << setw(15) << lecture.batch
-                 << setw(15) << lecture.branch << endl;
+                 << setw(10) << lecture.timeslot.slot << setw(15) << batchBranch.first
+                 << setw(15) << batchBranch.second << endl;
         }
         cout << string(100, '-') << endl;
     }

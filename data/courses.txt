@@ -6,7 +6,6 @@ EL111, Basic Electronic Circuits, 3-0-2-4, Core, RLD, BTech Sem-1, CS
 EL111, Basic Electronic Circuits, 3-0-2-4, Core, BM, BTech Sem-1, EVD
 IT112, Introduction to Programming, 3-0-0-3, Core, BG, BTech Sem-1, ICT
 IT112, Introduction to Programming, 3-0-0-3, Core, MK, BTech Sem-1, CS, EVD
-IT113, Introduction to Programming, 0-0-2-1, Core, PhD student, BTech Sem-1, ICT, CS, EVD
 SC107, Calculus, 3-1-0-4, Core, MKG, BTech Sem-1, ICT
 SC107, Calculus, 3-1-0-4, Core, SB2, BTech Sem-1, CS
 MC111, Mathematical Algorithmic and Computational Thinking, 3-1-0-4, Core, VS, BTech Sem-1, MnC
