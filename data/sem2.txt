@@ -1,0 +1,18 @@
+HM106, Approaches to Indian Society, 3-0-0-3, BK, BTech Sem-2, ICT
+HM106, Approaches to Indian Society, 3-0-0-3, BK, BTech Sem-2, CS, MnC, EVD
+IC121, Digital Logic and Computer Organization, 3-0-2-4, SR, BTech Sem-2, ICT
+IC121, Digital Logic and Computer Organization, 3-0-2-4, SR, BTech Sem-2, CS, EVD
+IT205, Data Structures, 3-0-0-3, SDG, BTech Sem-2, ICT
+IT205, Data Structures, 3-0-0-3, AR2, BTech Sem-2, CS, EVD
+IT206, Data Structure Lab using OOP, 1-0-2-2, PhD Scholar, BTech Sem-2, ICT, CS, EVD 
+SC205, Discrete Mathematics, 3-1-0-4, AT2, BTech Sem-2, ICT
+SC205, Discrete Mathematics, 3-1-0-4, MKR, BTech Sem-2, CS
+SC217, Electromagnetic Theory, 3-1-0-4, GD, BTech Sem-2, ICT, CS, EVD
+PC125, Exploration Project I, 0-1-0-1, Faculty, BTech Sem-2, ICT, CS, EVD
+CO121, CoCurricular II, 0-0-2-1, SBG/Music/Sports, BTech Sem-2, ICT, CS
+MC215, Linear Algebra, 3-1-0-4, SB2, BTech Sem-2, MnC 
+MC122, Object Oriented Programming, 2-0-2-3, TBD, BTech Sem-2, MnC  
+MC125, Functions of Single Variable and ODEs, 3-1-0-4, MS, BTech Sem-2, MnC 
+MC124, Data Structures and Algorithms, 3-0-2-4, RM2, BTech Sem-2, MnC
+ED121, Engineering Mathematics II, 3-1-0-4, PK2, BTech Sem-2, EVD
+
