@@ -10,7 +10,6 @@ struct Course
     string code;
     string title;
     string credit;
-    string courseType;
     string faculty;
     string batch;
     vector<string> branches;

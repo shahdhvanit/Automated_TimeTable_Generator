@@ -15,10 +15,6 @@ vector<Room> readRoomsFromFile(const string &filename)
         Room room;
 
         getline(ss, room.roomNumber, ',');
-        ss >> room.seating;
-        ss.ignore();
-        getline(ss, room.roomType, ',');
-        getline(ss, room.remarks); 
 
         rooms.push_back(room);
     }

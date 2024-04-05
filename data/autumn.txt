@@ -1,0 +1,38 @@
+PC110, LnL, 3-0-0-3, AM, BTech Sem-1, ICT
+PC110, LnL, 3-0-0-3, AM, BTech Sem-1, CS, MnC, EVD
+IC101, ICT, 1-0-2-2, AKR, BTech Sem-1, ICT, CS
+EL111, Basic Electronic Circuits, 3-0-2-4, SM, BTech Sem-1, ICT
+EL111, Basic Electronic Circuits, 3-0-2-4, RLD, BTech Sem-1, CS
+EL111, Basic Electronic Circuits, 3-0-2-4, BM, BTech Sem-1, EVD
+IT112, Introduction to Programming, 3-0-0-3, BG, BTech Sem-1, ICT
+IT112, Introduction to Programming, 3-0-0-3, MK, BTech Sem-1, CS, EVD
+SC107, Calculus, 3-1-0-4, MKG, BTech Sem-1, ICT
+SC107, Calculus, 3-1-0-4, SB2, BTech Sem-1, CS
+MC111, Mathematical Algorithmic and Computational Thinking, 3-1-0-4, VS, BTech Sem-1, MnC
+MC112, Computer Organization and Programming, 3-0-0-3, RP, BTech Sem-1, MnC
+MC116, Digital Logic Design, 1-0-2-2, SR, BTech Sem-1, MnC
+MC123, Discrete Mathematics, 3-1-0-4, SP, BTech Sem-1, MnC
+ED111, Engineering Mathematics I, 3-1-0-4, PK2, BTech Sem-1, EVD
+ED112, Engineering Physics, 3-1-0-4, AG, BTech Sem-1, EVD
+HM216, Science Technology and Society, 3-0-0-3, SJ, BTech Sem-3, ICT, CS, MnC
+CT204, Signals and Systems, 3-0-2-4, HP, BTech Sem-3, ICT
+CT204, Signals and Systems, 3-0-2-4, PK, BTech Sem-3, CS
+IT216, Design and Analysis of Algorithms, 3-0-2-4, PB, BTech Sem-3, ICT
+IT216, Design and Analysis of Algorithms, 3-0-2-4, SP, BTech Sem-3, CS
+IT227, Computer Systems Programming, 3-0-2-4, AKM, BTech Sem-3, ICT
+IT227, Computer Systems Programming, 3-0-2-4, SB, BTech Sem-3, CS
+SC223, Linear Algebra, 3-1-0-4, RM, BTech Sem-3, ICT
+SC223, Linear Algebra, 3-1-0-4, AT, BTech Sem-3, CS
+MC211, Functions of Several Variables and PDEs, 3-1-0-4, MS, BTech Sem-3, MnC
+MC212, Database Management Systems, 3-0-2-4, RC, BTech Sem-3, MnC
+MC213, Design and Analysis of Algorithms, 3-1-0-4, AT2, BTech Sem-3, MnC
+MC214, Operating Systems (along with IE411), 3-0-2-4, SS, BTech Sem-3, MnC
+MC216, Probability and Random Processes, 3-1-0-4, SK, BTech Sem-3, MnC
+IT314, Software Engineering, 3-0-2-4, ST, BTech Sem-5, ICT, CS
+IT304, Computer Networks, 3-0-2-4, PKS, BTech Sem-5, ICT, CS
+CT303, Digital Communication, 3-0-2-4, AJ, BTech Sem-5, ICT
+CT303, Digital Communication, 3-0-2-4, DKG, BTech Sem-5, CS
+CS374, Computational and Numerical Methods, 3-0-3-4.5, MKR, BTech Sem-5, CS
+MC311, Mathematical Optimization, 3-1-0-4, NKS, BTech Sem-5, MnC
+MC312, Modelling and Simulation, 3-0-2-4, MT, BTech Sem-5, MnC
+MC313, Algebraic Structures, 3-1-0-4, PK3, BTech Sem-5, MnC

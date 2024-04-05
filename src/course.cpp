@@ -17,7 +17,6 @@ vector<Course> readCoursesFromFile(const string &filename)
         getline(ss, course.code, ',');
         getline(ss, course.title, ',');
         getline(ss, course.credit, ',');
-        getline(ss, course.courseType, ',');
         getline(ss, course.faculty, ',');
         getline(ss, course.batch, ',');
 

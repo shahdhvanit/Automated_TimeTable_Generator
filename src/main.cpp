@@ -6,6 +6,7 @@
 #include <set>
 #include <ctime>
 #include <iomanip>
+#include <fstream>
 #include "../include/course.h"
 #include "../include/room.h"
 
@@ -132,7 +133,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
     for (const auto &course : shuffledCourses)
     {
         int lectures = stoi(course.credit.substr(0, course.credit.find("-")));
-        int assignmentsCount = 0; 
+        int lectureCount = 0;
 
         for (const auto &branch : course.branches)
         {
@@ -154,17 +155,12 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
                         lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
 
                         ++courseAssignments[course.code + branch];
-                        ++assignmentsCount; 
+                        ++lectureCount;
 
-                        break; 
+                        break;
                     }
                 }
             }
-        }
-
-        if (assignmentsCount < lectures)
-        {
-            cerr << "Warning: Could not assign required number of lectures for course " << course.code << endl;
         }
 
         for (int day = 1; day <= 5; ++day)
@@ -176,11 +172,8 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
     return timetable;
 }
 
-void printTimetable(const vector<Lecture> &timetable)
+void generateCSVFiles(const vector<Lecture> &timetable)
 {
-    cout << setw(15) << "Course" << setw(20) << "Faculty" << setw(15) << "Room"
-         << setw(10) << "Day" << setw(10) << "Slot" << setw(15) << "Batch" << setw(15) << "Branch" << endl;
-
     map<pair<string, string>, vector<Lecture>> batchBranchLectures;
     for (const auto &lecture : timetable)
     {
@@ -203,22 +196,56 @@ void printTimetable(const vector<Lecture> &timetable)
         const auto &batchBranch = entry.first;
         const auto &lectures = entry.second;
 
-        cout << "Batch: " << batchBranch.first << ", Branch: " << batchBranch.second << endl;
+        string filename = "timetable_" + batchBranch.first + "_" + batchBranch.second + ".csv";
+        ofstream file(filename);
 
-        for (const auto &lecture : lectures)
+        file << "Slots,Monday,Tuesday,Wednesday,Thursday,Friday\n";
+
+        for (int slot = 1; slot <= 5; ++slot)
         {
-            cout << setw(15) << lecture.courseCode << setw(20) << lecture.faculty
-                 << setw(15) << lecture.roomNumber << setw(10) << lecture.timeslot.day
-                 << setw(10) << lecture.timeslot.slot << setw(15) << batchBranch.first
-                 << setw(15) << batchBranch.second << endl;
+            file << slot;
+
+            for (int day = 1; day <= 5; ++day)
+            {
+                file << ",";
+
+                auto it = find_if(lectures.begin(), lectures.end(), [=](const Lecture &l)
+                                  { return l.timeslot.day == day && l.timeslot.slot == slot; });
+
+                if (it != lectures.end())
+                {
+                    const Lecture &lecture = *it;
+                    file << lecture.courseCode << "("
+                         << lecture.faculty << "|"
+                         << lecture.roomNumber << ")";
+                }
+                else
+                {
+                    file << " ";
+                }
+            }
+
+            file << "\n";
         }
-        cout << string(100, '-') << endl;
+        file.close();
     }
 }
 
 int main()
 {
-    vector<Course> courses = readCoursesFromFile("data/courses.txt");
+    cout << "Enter semester type: (autumn/winter)" << endl;
+    string semester;
+    cin >> semester;
+
+    if (semester != "autumn" && semester != "winter")
+    {
+        cout << "Invalid semester type" << endl;
+        return 1;
+    }
+
+    string inputFile = "data/" + semester + ".txt";
+
+    vector<Course> courses = readCoursesFromFile(inputFile);
     vector<Room> rooms = readRoomsFromFile("data/rooms.txt");
 
     srand(static_cast<unsigned int>(time(0)));
@@ -233,7 +260,7 @@ int main()
              }
              return lhs.timeslot.day < rhs.timeslot.day; });
 
-    printTimetable(timetable);
+    generateCSVFiles(timetable);
 
     return 0;
 }
