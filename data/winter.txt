@@ -1,0 +1,33 @@
+HM106, Approaches to Indian Society, 3-0-0-3, BK, BTech Sem-2, ICT
+HM106, Approaches to Indian Society, 3-0-0-3, BK, BTech Sem-2, CS, MnC, EVD
+IC121, Digital Logic and Computer Organization, 3-0-2-4, SR, BTech Sem-2, ICT
+IC121, Digital Logic and Computer Organization, 3-0-2-4, SR, BTech Sem-2, CS, EVD
+IT205, Data Structures, 3-0-0-3, SDG, BTech Sem-2, ICT
+IT205, Data Structures, 3-0-0-3, AR2, BTech Sem-2, CS, EVD
+IT206, Data Structure Lab using OOP, 1-0-2-2, PhD Scholar, BTech Sem-2, ICT, CS, EVD
+SC205, Discrete Mathematics, 3-1-0-4, AT2, BTech Sem-2, ICT
+SC205, Discrete Mathematics, 3-1-0-4, MKR, BTech Sem-2, CS
+SC217, Electromagnetic Theory, 3-1-0-4, GD, BTech Sem-2, ICT, CS, EVD
+MC215, Linear Algebra, 3-1-0-4, SB2, BTech Sem-2, MnC
+MC122, Object Oriented Programming, 2-0-2-3, TBD, BTech Sem-2, MnC
+MC125, Functions of Single Variable and ODEs, 3-1-0-4, MS, BTech Sem-2, MnC
+MC124, Data Structures and Algorithms, 3-0-2-4, RM2, BTech Sem-2, MnC
+ED121, Engineering Mathematics II, 3-1-0-4, PK2, BTech Sem-2, EVD
+HM116, Principles of Economics, 3-0-0-3, Gaurav, Btech Sem-4, ICT
+HM116, Principles of Economics, 3-0-0-3, Cyril, Btech Sem-4, CS
+EL203, Embedded Hardware Design, 3-0-2-4, BM, Btech Sem-4, ICT
+EL203, Embedded Hardware Design, 3-0-2-4, YA, Btech Sem-4, CS
+IT214, Database Management System, 3-0-2-4, PMJ, Btech Sem-4, ICT, CS
+CT216, Introduction to Communication Systems, 3-0-2-4, YV, Btech Sem-4, ICT, CS
+SC224, Probability and Statistics, 3-1-0-4, MS, Btech Sem-4, ICT, CS
+CS201, Introductory Computational Physics, 3-0-3-4.5, AR, Btech Sem-4, CS
+MC221, Mathematical Statistics, 3-1-0-4, GP, Btech Sem-4, MnC
+MC222, Real and Complex Analysis, 3-1-0-4, NKS, Btech Sem-4, MnC
+MC223, Theory of Computation, 3-1-0-4, PB, Btech Sem-4, MnC
+MC224, Parallel and Distributed Algorithms, 3-1-0-4, VS, Btech Sem-4, MnC
+MC225, Numerical and Computational Methods, 3-0-2-4, SK, Btech Sem-4, MnC
+MC226, Environmental Studies, 2-0-0-2, RG, Btech Sem-4, MnC
+SC407, Environmental Science, 3-0-0-3, YV, Btech Sem-6, ICT, CS
+CS302, Modeling and Simulation, 3-0-3-4.5, AR, Btech Sem-6, CS
+CS301, High Performance Computing, 3-0-3-4.5, BC, Btech Sem-6, CS
+MC321, Machine Learning, 3-0-2-4, PA, Btech Sem-6, MnC
