@@ -268,6 +268,62 @@ void generateCSVFiles(const vector<Lecture> &timetable)
     }
 }
 
+void generateCSVFileForFaculty(const vector<Lecture> &timetable, const string &facultyName)
+{
+    vector<Lecture> facultyLectures;
+    string facultyNameLower = facultyName;
+    transform(facultyNameLower.begin(), facultyNameLower.end(), facultyNameLower.begin(), ::tolower);
+
+    for (const auto &lecture : timetable)
+    {
+        string lectureFacultyLower = lecture.faculty;
+        transform(lectureFacultyLower.begin(), lectureFacultyLower.end(), lectureFacultyLower.begin(), ::tolower);
+        if (lectureFacultyLower == facultyNameLower)
+        {
+            facultyLectures.push_back(lecture);
+        }
+    }
+
+    if (facultyLectures.empty())
+    {
+        cout << "No lectures found for faculty: " << facultyName << endl;
+        return;
+    }
+
+    string filename = "timetable_" + facultyName + ".csv";
+    ofstream file(filename);
+
+    file << "Slots,Monday,Tuesday,Wednesday,Thursday,Friday\n";
+
+    for (int slot = 1; slot <= 5; ++slot)
+    {
+        file << slot;
+
+        for (int day = 1; day <= 5; ++day)
+        {
+            file << ",";
+
+            auto it = find_if(facultyLectures.begin(), facultyLectures.end(), [=](const Lecture &l)
+                              { return l.timeslot.day == day && l.timeslot.slot == slot; });
+
+            if (it != facultyLectures.end())
+            {
+                const Lecture &lecture = *it;
+                file << lecture.courseCode << "("
+                     << lecture.faculty << "|"
+                     << lecture.roomNumber << ")";
+            }
+            else
+            {
+                file << " ";
+            }
+        }
+
+        file << "\n";
+    }
+    file.close();
+}
+
 int main()
 {
     cout << "Enter semester type: (autumn/winter)" << endl;
@@ -306,6 +362,12 @@ int main()
              return lhs.timeslot.day < rhs.timeslot.day; });
 
     generateCSVFiles(timetable);
+
+    string facultyName;
+    cout << "Enter faculty name to generate timetable CSV: ";
+    cin >> facultyName;
+
+    generateCSVFileForFaculty(timetable, facultyName);
 
     return 0;
 }
