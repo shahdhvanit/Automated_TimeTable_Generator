@@ -104,62 +104,99 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
     return true;
 }
 
+vector<Timeslot> assignTimeslots(const vector<Course> &courses)
+{
+    vector<Timeslot> timeslots;
+    for (const auto &course : courses)
+    {
+        for (int slot = 1; slot <= 5; ++slot)
+        {
+            Timeslot timeslot;
+            timeslot.day = rand() % 5 + 1;
+            timeslot.slot = slot;
+            timeslots.push_back(timeslot);
+        }
+    }
+    return timeslots;
+}
+
 vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Room> &rooms)
 {
     vector<Lecture> timetable;
     map<Timeslot, set<string>> timeslotOccupancy;
     map<int, set<string>> lecturesAssignedPerDay;
 
-    vector<Course> shuffledCourses = courses;
-    random_shuffle(shuffledCourses.begin(), shuffledCourses.end());
-
-    vector<pair<Timeslot, string>> allSlotsWithRooms;
-
-    for (int day = 1; day <= 5; ++day)
-    {
-        for (int slot = 1; slot <= 5; ++slot)
-        {
-            for (const auto &room : rooms)
-            {
-                allSlotsWithRooms.push_back({{day, slot}, room.roomNumber});
-            }
-        }
-    }
-
-    random_shuffle(allSlotsWithRooms.begin(), allSlotsWithRooms.end());
+    vector<Timeslot> timeslots = assignTimeslots(courses);
+    random_shuffle(timeslots.begin(), timeslots.end());
 
     map<string, int> courseAssignments;
 
-    for (const auto &course : shuffledCourses)
+    for (const auto &course : courses)
     {
-        int lectures = stoi(course.credit.substr(0, course.credit.find("-")));
-        int lectureCount = 0;
+        int requiredLectures = stoi(course.credit.substr(0, course.credit.find("-")));
+        int assignedLectures = 0;
 
         for (const auto &branch : course.branches)
         {
-            for (int i = 0; i < lectures; ++i)
+            for (int i = 0; i < requiredLectures; ++i)
             {
-                for (const auto &slotWithRoom : allSlotsWithRooms)
+                for (const auto &timeslot : timeslots)
                 {
-                    const auto &timeslot = slotWithRoom.first;
-                    const auto &roomNumber = slotWithRoom.second;
-
-                    Lecture lecture = {course.code, course.faculty, roomNumber, timeslot, course.batch, branch};
-
-                    if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
-                        find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
-                        lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                    for (const auto &room : rooms)
                     {
-                        timetable.push_back(lecture);
-                        timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
-                        lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+                        Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, branch};
 
-                        ++courseAssignments[course.code + branch];
-                        ++lectureCount;
+                        if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
+                            find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
+                            lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                        {
+                            timetable.push_back(lecture);
+                            timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
+                            lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
 
-                        break;
+                            ++courseAssignments[course.code + branch];
+                            ++assignedLectures;
+
+                            break;
+                        }
                     }
+                    if (assignedLectures == requiredLectures)
+                        break;
                 }
+                if (assignedLectures == requiredLectures)
+                    break;
+            }
+        }
+
+        if (assignedLectures < requiredLectures)
+        {
+            int remainingLectures = requiredLectures - assignedLectures;
+            for (int i = 0; i < remainingLectures; ++i)
+            {
+                for (const auto &timeslot : timeslots)
+                {
+                    for (const auto &room : rooms)
+                    {
+                        Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, course.branches[0]};
+
+                        if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
+                            lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
+                        {
+                            timetable.push_back(lecture);
+                            timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
+                            lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
+
+                            ++courseAssignments[course.code + course.branches[0]];
+                            ++assignedLectures;
+
+                            break;
+                        }
+                    }
+                    if (assignedLectures == requiredLectures)
+                        break;
+                }
+                if (assignedLectures == requiredLectures)
+                    break;
             }
         }
 
