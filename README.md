@@ -18,24 +18,37 @@ Given slots (list of instructors, list of courses, and the course credit details
 
 ## Algorithm Description:
 
-1. Assign timeslots(assignTimeslots): It assign a random timeslot out of total 5 timeslot in a day to each course.
+1. **Assign timeslots(assignTimeslots):**
+
+    - Description: It assign a random timeslot out of total 5 timeslot in a day to each course.
+    - Time Complexity: _O(n)_
+    - Space Complexity: _O(1)_
 
 2. Generate Timetable(generateTimetable):
 
-    - It generates timetable for all the courses of a particular branch and batch.
-    - It iterates through all the courses.
-    - It checks for the number of lectures assigned to a particular course based on the l-t-p-ccredits.
-    - Assign lectures for each branch and batch:
-        - it iterates through all required lectures.
-        - For each lecture it assigns a random timeslot to the course, then it finds suitable room for the course avoiding any type of clashes.
+    - Description:
+        - It generates timetable for all the courses of a particular branch and batch.
+        - It iterates through all the courses.
+        - It checks for the number of lectures assigned to a particular course based on the l-t-p-c credits.
+        - Assign lectures for each branch and batch:
+            - it iterates through all required lectures.
+            - For each lecture it assigns a random timeslot to the course, then it finds suitable room for the course avoiding any type of clashes.
+    - Time Complexity: _O(n*m)_ where n is the number of courses and m is the number of batches.
+    - Space Complexity: _O(1)_
 
 3. GenerateCSVFiles
-    - It first groups branches and batches
-    - It then generates individual files for each branches.
+    - Description:
+        - It first groups branches and batches
+        - It then generates individual files for each branches.
+    - Time Complexity: _O(n)_ where n is the number of branches.
+    - Space Complexity: _O(1)_
 
 4. GenerateCSVFilesForFaculty
-    - It generates timetable for a particular faculty.
-    - It iterates through the timetable and generates a CSV file for the faculty.
+    - Description:
+        - It generates timetable for a particular faculty.
+        - It iterates through the timetable and generates a CSV file for the faculty.
+    - Time Complexity: _O(n)_ where n is the number of courses. If we generate timetable for all the individual faculties then time complexity will be _O(n*m)_ where m is the number of faculties.
+    - Space Complexity: _O(1)_
 
 ## Data Structure:
 
@@ -72,3 +85,11 @@ then
 ```sh
 ./timetable
 ```
+
+## Screenshots of the output:
+
+Screenshot of Sem-1 CS
+![image](https://github.com/pranshu05/OverclockedProcessors/assets/70943732/b141ba77-b864-47ab-8792-918c22c3c0f8)
+
+Screenshot of Faculty timetable for Amishal Modi:
+![image](https://github.com/pranshu05/OverclockedProcessors/assets/70943732/34314221-e04a-42cd-9182-8cc66319983a)
