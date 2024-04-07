@@ -338,14 +338,6 @@ int main()
 
     string inputFile = "data/" + semester + ".txt";
 
-    ifstream input(inputFile);
-
-    if (!input)
-    {
-        cerr << "Error: Unable to open file " << inputFile << endl;
-        return 1;
-    }
-
     vector<Course> courses = readCoursesFromFile(inputFile);
     vector<Room> rooms = readRoomsFromFile("data/rooms.txt");
 
