@@ -7,16 +7,17 @@
 #include <ctime>
 #include <iomanip>
 #include <fstream>
-#include "../include/course.h"
-#include "../include/room.h"
+#include "../include/course.h"  // Include header file for courses
+#include "../include/room.h"    // Include header file for rooms
 
 using namespace std;
 
 struct Timeslot
 {
-    int day;
-    int slot;
+    int day;    // Day of the week (1-5)
+    int slot;   // Slot within the day (1-5)
 
+    // Custom comparator for sorting Timeslots
     friend bool operator<(const Timeslot &lhs, const Timeslot &rhs)
     {
         if (lhs.day == rhs.day)
@@ -29,19 +30,21 @@ struct Timeslot
 
 struct Lecture
 {
-    string courseCode;
-    string faculty;
-    string roomNumber;
-    Timeslot timeslot;
-    string batch;
-    string branch;
+    string courseCode;  // Code of the course
+    string faculty;     // Name of the faculty teaching the course
+    string roomNumber;  // Room number where the lecture is scheduled
+    Timeslot timeslot;  // Timeslot for the lecture
+    string batch;       // Batch of students attending the lecture
+    string branch;      // Branch(es) associated with the course
 };
 
+// Function to check if two timeslots overlap
 bool isOverlap(const Timeslot &t1, const Timeslot &t2)
 {
     return (t1.day == t2.day && t1.slot == t2.slot);
 }
 
+// Function to check if a lecture assignment is valid
 bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable, map<Timeslot, set<string>> &timeslotOccupancy)
 {
     auto splitBranches = [](const string &branches)
@@ -56,32 +59,37 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
         return result;
     };
 
+    // Iterate over existing lectures in the timetable
     for (const auto &existingLecture : timetable)
     {
         set<string> commonBranches;
         set<string> lectureBranchSet = splitBranches(lecture.branch);
         set<string> existingLectureBranchSet = splitBranches(existingLecture.branch);
 
+        // Calculate the intersection of branch sets
         set_intersection(
             lectureBranchSet.begin(), lectureBranchSet.end(),
             existingLectureBranchSet.begin(), existingLectureBranchSet.end(),
             inserter(commonBranches, commonBranches.begin()));
 
+        // Check for conflicts in schedule
         if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
             (lecture.roomNumber == existingLecture.roomNumber ||
              lecture.faculty == existingLecture.faculty ||
              lecture.courseCode == existingLecture.courseCode ||
              (lecture.batch == existingLecture.batch && !commonBranches.empty())))
         {
-            return false;
+            return false;  // Conflict found
         }
     }
 
+    // Check if the timeslot is already occupied by another branch
     if (timeslotOccupancy[lecture.timeslot].find(lecture.branch) != timeslotOccupancy[lecture.timeslot].end())
     {
-        return false;
+        return false;  // Timeslot already occupied
     }
 
+    // Check for batch-specific conflicts
     for (const auto &existingLecture : timetable)
     {
         set<string> commonBranches;
@@ -97,13 +105,14 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
             lecture.batch == existingLecture.batch &&
             !commonBranches.empty())
         {
-            return false;
+            return false;  // Conflict found
         }
     }
 
-    return true;
+    return true;  // Assignment is valid
 }
 
+// Function to assign timeslots to courses
 vector<Timeslot> assignTimeslots(const vector<Course> &courses)
 {
     vector<Timeslot> timeslots;
@@ -112,14 +121,15 @@ vector<Timeslot> assignTimeslots(const vector<Course> &courses)
         for (int slot = 1; slot <= 5; ++slot)
         {
             Timeslot timeslot;
-            timeslot.day = rand() % 5 + 1;
-            timeslot.slot = slot;
+            timeslot.day = rand() % 5 + 1;  // Randomly assign day (1-5)
+            timeslot.slot = slot;           // Assign slot (1-5)
             timeslots.push_back(timeslot);
         }
     }
     return timeslots;
 }
 
+// Function to generate timetable
 vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Room> &rooms)
 {
     vector<Lecture> timetable;
@@ -131,25 +141,32 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
 
     map<string, int> courseAssignments;
 
+    // Iterate over courses
     for (const auto &course : courses)
     {
         int requiredLectures = stoi(course.credit.substr(0, course.credit.find("-")));
         int assignedLectures = 0;
 
+        // Iterate over branches of the course
         for (const auto &branch : course.branches)
         {
+            // Try to assign required number of lectures
             for (int i = 0; i < requiredLectures; ++i)
             {
+                // Iterate over available timeslots
                 for (const auto &timeslot : timeslots)
                 {
+                    // Iterate over available rooms
                     for (const auto &room : rooms)
                     {
                         Lecture lecture = {course.code, course.faculty, room.roomNumber, timeslot, course.batch, branch};
 
+                        // Check if assignment is valid
                         if (isValidAssignment(lecture, timetable, timeslotOccupancy) &&
                             find(course.branches.begin(), course.branches.end(), branch) != course.branches.end() &&
                             lecturesAssignedPerDay[timeslot.day].count(lecture.courseCode) == 0)
                         {
+                            // Add lecture to timetable
                             timetable.push_back(lecture);
                             timeslotOccupancy[lecture.timeslot].insert(lecture.branch);
                             lecturesAssignedPerDay[timeslot.day].insert(lecture.courseCode);
@@ -168,6 +185,7 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
             }
         }
 
+        // If required lectures are not assigned, assign to default branch
         if (assignedLectures < requiredLectures)
         {
             int remainingLectures = requiredLectures - assignedLectures;
@@ -200,18 +218,23 @@ vector<Lecture> generateTimetable(const vector<Course> &courses, const vector<Ro
             }
         }
 
+        // Clear assigned lectures per day for next course
         for (int day = 1; day <= 5; ++day)
         {
             lecturesAssignedPerDay[day].clear();
         }
     }
 
-    return timetable;
+    return timetable;  // Return generated timetable
 }
 
+// Function to generate CSV files for the timetable
 void generateCSVFiles(const vector<Lecture> &timetable)
 {
+    // Map to store lectures by batch and branch
     map<pair<string, string>, vector<Lecture>> batchBranchLectures;
+
+    // Group lectures by batch and branch
     for (const auto &lecture : timetable)
     {
         vector<string> branches;
@@ -228,16 +251,20 @@ void generateCSVFiles(const vector<Lecture> &timetable)
         }
     }
 
+    // Iterate over batches and branches
     for (const auto &entry : batchBranchLectures)
     {
         const auto &batchBranch = entry.first;
         const auto &lectures = entry.second;
 
+        // Generate filename
         string filename = "timetable_" + batchBranch.first + "_" + batchBranch.second + ".csv";
         ofstream file(filename);
 
+        // Write header to file
         file << "Slots,Monday,Tuesday,Wednesday,Thursday,Friday\n";
 
+        // Write timetable data to file
         for (int slot = 1; slot <= 5; ++slot)
         {
             file << slot;
@@ -268,12 +295,14 @@ void generateCSVFiles(const vector<Lecture> &timetable)
     }
 }
 
+// Function to generate CSV file for a specific faculty
 void generateCSVFileForFaculty(const vector<Lecture> &timetable, const string &facultyName)
 {
     vector<Lecture> facultyLectures;
     string facultyNameLower = facultyName;
     transform(facultyNameLower.begin(), facultyNameLower.end(), facultyNameLower.begin(), ::tolower);
 
+    // Filter lectures for the specified faculty
     for (const auto &lecture : timetable)
     {
         string lectureFacultyLower = lecture.faculty;
@@ -284,17 +313,21 @@ void generateCSVFileForFaculty(const vector<Lecture> &timetable, const string &f
         }
     }
 
+    // If no lectures found for the faculty, return
     if (facultyLectures.empty())
     {
         cout << "No lectures found for faculty: " << facultyName << endl;
         return;
     }
 
+    // Generate filename
     string filename = "timetable_" + facultyName + ".csv";
     ofstream file(filename);
 
+    // Write header to file
     file << "Slots,Monday,Tuesday,Wednesday,Thursday,Friday\n";
 
+    // Write timetable data to file
     for (int slot = 1; slot <= 5; ++slot)
     {
         file << slot;
@@ -324,27 +357,32 @@ void generateCSVFileForFaculty(const vector<Lecture> &timetable, const string &f
     file.close();
 }
 
+// Main function
 int main()
 {
+    // Prompt user to enter semester type
     cout << "Enter semester type: (autumn/winter)" << endl;
     string semester;
     cin >> semester;
 
+    // Validate semester type
     if (semester != "autumn" && semester != "winter")
     {
         cout << "Invalid semester type" << endl;
         return 1;
     }
 
-    string inputFile = "data/" + semester + ".txt";
+    string inputFile = "data/" + semester + ".txt";  // Input file containing course data
 
-    vector<Course> courses = readCoursesFromFile(inputFile);
-    vector<Room> rooms = readRoomsFromFile("data/rooms.txt");
+    vector<Course> courses = readCoursesFromFile(inputFile);  // Read courses from file
+    vector<Room> rooms = readRoomsFromFile("data/rooms.txt");  // Read rooms from file
 
-    srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));  // Seed random number generator
 
+    // Generate timetable
     vector<Lecture> timetable = generateTimetable(courses, rooms);
 
+    // Sort timetable by day and slot
     sort(timetable.begin(), timetable.end(), [](const Lecture &lhs, const Lecture &rhs)
          {
              if (lhs.timeslot.day == rhs.timeslot.day)
@@ -353,12 +391,14 @@ int main()
              }
              return lhs.timeslot.day < rhs.timeslot.day; });
 
+    // Generate CSV files for timetable
     generateCSVFiles(timetable);
 
     string facultyName;
     cout << "Enter faculty name to generate timetable CSV: ";
     cin >> facultyName;
 
+    // Generate CSV file for specific faculty
     generateCSVFileForFaculty(timetable, facultyName);
 
     return 0;
