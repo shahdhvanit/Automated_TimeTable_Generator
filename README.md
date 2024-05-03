@@ -2,6 +2,10 @@
 
 This is a repo contanig the solution for the **P1. Automated Time-Table Generator**
 
+## Link to the ppt presentation:
+
+[ppt](https://docs.google.com/presentation/d/1vYzs8H-8mCIG7DRjbqc2PtOb0dHUPy9SHfI9XZdEESY/edit?usp=sharing)
+
 ## Problem Statement:
 
 Given slots (list of instructors, list of courses, and the course credit details), generate a weekly lecture and lab timetable with no clashes and continuous sessions of the same instructor. It might be possible to assign two instructors to the same course as well as some instructors should only be given lectures during the initial hours. Also, it should return a timetable for an instructor and a classroom/lab.
