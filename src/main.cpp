@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -85,26 +86,6 @@ bool isValidAssignment(const Lecture &lecture, const vector<Lecture> &timetable,
     if (timeslotOccupancy[lecture.timeslot].find(lecture.branch) != timeslotOccupancy[lecture.timeslot].end())
     {
         return false;  // Timeslot already occupied
-    }
-
-    // Check for batch-specific conflicts
-    for (const auto &existingLecture : timetable)
-    {
-        set<string> commonBranches;
-        set<string> lectureBranchSet = splitBranches(lecture.branch);
-        set<string> existingLectureBranchSet = splitBranches(existingLecture.branch);
-
-        set_intersection(
-            lectureBranchSet.begin(), lectureBranchSet.end(),
-            existingLectureBranchSet.begin(), existingLectureBranchSet.end(),
-            inserter(commonBranches, commonBranches.begin()));
-
-        if (isOverlap(lecture.timeslot, existingLecture.timeslot) &&
-            lecture.batch == existingLecture.batch &&
-            !commonBranches.empty())
-        {
-            return false;  // Conflict found
-        }
     }
 
     return true;  // Assignment is valid
@@ -358,8 +339,8 @@ void generateCSVFileForFaculty(const vector<Lecture> &timetable, const string &f
 // Main function
 int main()
 {
-    // Prompt user to enter semester type
-    cout << "Enter semester type: (autumn/winter)" << endl;
+    
+    cout << "Enter semester type: ( autumn / winter )" << endl;
     string semester;
     cin >> semester;
 
@@ -377,27 +358,24 @@ int main()
 
     srand(static_cast<unsigned int>(time(0)));  // Seed random number generator
 
-    // Generate timetable
+    // Generate the timetable
     vector<Lecture> timetable = generateTimetable(courses, rooms);
 
-    // Sort timetable by day and slot
-    sort(timetable.begin(), timetable.end(), [](const Lecture &lhs, const Lecture &rhs)
-         {
-             if (lhs.timeslot.day == rhs.timeslot.day)
-             {
-                 return lhs.timeslot.slot < rhs.timeslot.slot;
-             }
-             return lhs.timeslot.day < rhs.timeslot.day; });
-
-    // Generate CSV files for timetable
+    // Generate CSV files for each batch and branch
     generateCSVFiles(timetable);
 
-    string facultyName;
-    cout << "Enter faculty name to generate timetable CSV: ";
-    cin >> facultyName;
+    cout << "Time-Table for all Autumn semester branches is generated successfully. Do you want to generate a timetable for a specific faculty? ( yes / no ): ";
+    string response;
+    cin >> response;
 
-    // Generate CSV file for specific faculty
-    generateCSVFileForFaculty(timetable, facultyName);
+    if (response == "yes") {
+        cout << "Enter faculty name: ";
+        string facultyName;
+        cin.ignore(); // clear newline from previous input
+        getline(cin, facultyName); // allow full name input with spaces
+        generateCSVFileForFaculty(timetable, facultyName);
+    }
 
+    cout << "Timetable generation completed successfully!" << endl;
     return 0;
 }
