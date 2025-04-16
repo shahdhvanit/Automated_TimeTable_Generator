@@ -364,7 +364,7 @@ int main()
     // Generate CSV files for each batch and branch
     generateCSVFiles(timetable);
 
-    cout << "Time-Table for all Autumn semester branches is generated successfully. Do you want to generate a timetable for a specific faculty? ( yes / no ): ";
+    cout << "Time-Tables for all semester branches are generated successfully. Do you want to generate a timetable for a specific faculty? ( yes / no ): ";
     string response;
     cin >> response;
 
