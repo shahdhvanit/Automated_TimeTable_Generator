@@ -69,22 +69,18 @@ Before assigning a time slot to a subject, this function verifies if the assignm
     - Usage: To store the data of courses, rooms, lectures, and timeslots.
     - Reason:
         - Vector provides flexibe dynamic size.
-        - For vectors time complexity for random acces is _O(1)_, time complexity for appending is _O(1)_, which makes the algorithm fast to store the data of courses, rooms, lectures, and timeslots.
-        - In the worst case, the time complexity for insertion/delition is _O(n)_.
 
 2. Maps:
 
     - Usage: To store the occupency data of rooms and timeslots.
     - Reason:
         - It provides a key-value pair data structure. It is efficient in searching based on keys(timeslots).
-        - In the worst case, the time complexity for insertion/deletion/search is _O(log(n))_.
 
 3. Sets:
 
     - Usage: To store branch Groups and abstract individual branch from it.
     - Reason:
         - For finding clash between coomon branches in individual branch and Branch groups it is efficient to use sets.
-        - In the worst case, the time complexity for insertion/deletion/search is _O(log(n))_.
 
 ## ⚙️ How to run the code:
 
