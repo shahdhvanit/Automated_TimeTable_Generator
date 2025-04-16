@@ -105,3 +105,5 @@ Screenshot of Sem-1 CS
 
 Screenshot of Faculty timetable for Amishal Modi:
 ![image](https://github.com/pranshu05/OverclockedProcessors/assets/70943732/34314221-e04a-42cd-9182-8cc66319983a)
+
+[hello](https://www.google.com/search?si=APYL9bv5mSDd0BZyhK2JzF8TziM8k99_JPagGXmFxgGtwKKW0UWujMuW5I-nxX5lbUEg3X1-TuqBV71aSjDPOqH9N92RZRiICg==&biw=1536&bih=826&dpr=1.25)
